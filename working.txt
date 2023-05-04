@@ -1,0 +1,116 @@
+@foreach (var imagePath in Directory.GetFiles(ImagePath, "*.jpg"))
+{
+    <img src="@imagePath" alt="Picture" onclick="ShowModal('@imagePath')" />
+}
+private string ImagePath => $"{HostEnvironment.WebRootPath}/Images";
+
+
+@page "/gallery"
+@using System.IO
+
+<h1>Picture Gallery</h1>
+
+<table>
+    <tbody>
+        @foreach (var filesGroup in GetImageFilesGroupedByRows(8))
+        {
+            <tr>
+                @foreach (var file in filesGroup)
+                {
+                    <td>
+                        <img src="@($"/Pictures/{Path.GetFileName(file)}")" alt="Image" data-toggle="modal" data-target="#myModal" @onclick="(() => ShowImage(file))">
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Image">
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string selectedImage = "";
+
+    private void ShowImage(string imagePath)
+    {
+        selectedImage = $"/Pictures/{Path.GetFileName(imagePath)}";
+    }
+
+    private IEnumerable<IEnumerable<string>> GetImageFilesGroupedByRows(int numColumns)
+    {
+        var imageFiles = Directory.GetFiles("wwwroot/Pictures", "*.jpg|*.png|*.gif");
+        var numRows = (int)Math.Ceiling((double)imageFiles.Length / numColumns);
+
+        for (int i = 0; i < numRows; i++)
+        {
+            yield return imageFiles.Skip(i * numColumns).Take(numColumns);
+        }
+    }
+}
+
+
+
+
+
+
+
+@page "/gallery"
+@using System.IO
+
+<h1>Picture Gallery</h1>
+
+<table>
+    <tbody>
+        @foreach (var filesGroup in GetImageFilesGroupedByRows(8))
+        {
+            <tr>
+                @foreach (var file in filesGroup)
+                {
+                    <td>
+                        <img src="@($"/Pictures/{Path.GetFileName(file)}")" alt="Image" data-toggle="modal" data-target="#myModal" @onclick="(() => ShowImage(file))" style="width: 200px; height: 200px;">
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Image">
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string selectedImage = "";
+
+    private void ShowImage(string imagePath)
+    {
+        selectedImage = $"/Pictures/{Path.GetFileName(imagePath)}";
+    }
+
+    private IEnumerable<IEnumerable<string>> GetImageFilesGroupedByRows(int numColumns)
+    {
+        var imageFiles = Directory.GetFiles("wwwroot/Pictures", "*.jpg|*.png|*.gif");
+        var numRows = (int)Math.Ceiling((double)imageFiles.Length / numColumns);
+
+        for (int i = 0; i < numRows; i++)
+        {
+            yield return imageFiles.Skip(i * numColumns).Take(numColumns);
+        }
+    }
+}
