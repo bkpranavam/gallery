@@ -140,3 +140,47 @@ In your Pages/Index.razor file, add a reference to the Bootstrap modal JavaScrip
         }
     }
 }
+
+
+
+
+<style>
+    /* Style for the picture gallery table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    /* Style for the picture gallery images */
+    td img {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    td img:hover {
+        opacity: 0.7;
+    }
+
+    /* Style for the modal dialog */
+    .modal-dialog {
+        max-width: 800px;
+    }
+
+    .modal-content {
+        border: none;
+    }
+
+    .modal-body img {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        max-height: 500px;
+        object-fit: contain;
+    }
+</style>
