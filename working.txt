@@ -114,3 +114,29 @@ private string ImagePath => $"{HostEnvironment.WebRootPath}/Images";
         }
     }
 }
+
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+
+
+Pages/_Host.cshtml
+
+
+In your Pages/Index.razor file, add a reference to the Bootstrap modal JavaScript file:
+
+@inject IJSRuntime JSRuntime
+@* ... *@
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("import", "/_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js");
+            await JSRuntime.InvokeVoidAsync("import", "/_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/Authentication.js");
+            await JSRuntime.InvokeVoidAsync("import", "/js/bootstrap.min.js");
+        }
+    }
+}
